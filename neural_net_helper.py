@@ -61,6 +61,7 @@ class NN_Helper():
         _ = fig.tight_layout()
         return fig, axs
 
+    
     def NN(self, W,b):
         """
         Create a "neuron" z = ReLu( W*x + b )
@@ -173,3 +174,50 @@ class NN_Helper():
         _  = ax.set_title("Cosine Learning Rate schedule")
 
         return fig, ax
+
+class Charts_Helper():
+    def __init__(self, save_dir="/tmp", visible=True, **params):
+        """
+        Class to produce charts (pre-compute rather than build on the fly) to include in notebook
+
+        Parameters
+        ----------
+        save_dir: String.  Directory in which charts are created
+        visible: Boolean.  Create charts but do/don't display immediately
+        """
+        self.X, self.y = None, None
+        self.save_dir = save_dir
+
+        self.visible = visible
+
+        nnh = NN_Helper()
+        self.nnh = nnh
+
+        return
+
+    def create_activation_functions_chart(self):
+        nnh = self.nnh
+        visible = self.visible
+        
+        fig, axs = nnh.plot_activations( np.arange(-5,5, 0.1) )
+        
+        if not visible:
+            plt.close(fig)
+
+        return fig, axs
+    
+    def create_charts(self):
+        save_dir = self.save_dir
+
+        print("Saving to directory: ", save_dir)
+        
+        print("Create Activation function chart")
+        fig, ax = self.create_activation_functions_chart()
+        act_func_file = os.path.join(save_dir, "activation_functions.png")
+        fig.savefig(act_func_file)
+        
+        print("Done")
+        
+        return { "activation functions": act_func_file
+                 }
+
