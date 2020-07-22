@@ -333,8 +333,8 @@ class Recipe_Helper():
             # _= ax.scatter(x, target - pred, label="Error")
             _= ax.bar(x.reshape(-1), (target - pred).reshape(-1), label="Error")
             _= ax.set_xlabel("Error")
-            _= ax.set_ylabel(xlabel)
-            _= ax.set_xlabel(ylabel)
+            _= ax.set_ylabel(ylabel)
+            _= ax.set_xlabel(xlabel)
             _= ax.set_title(label + " Error")
             _= ax.legend()
 
