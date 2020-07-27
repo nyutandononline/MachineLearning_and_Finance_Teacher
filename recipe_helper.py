@@ -257,7 +257,7 @@ class Recipe_Helper():
         _ = regr.fit(X_train, y_train)
 
         # The coefficients
-        if hasattr(regr, "intercept_") and hasattr(regr, "coef_"):
+        if print_summary and  hasattr(regr, "intercept_") and hasattr(regr, "coef_"):
             print('Coefficients: \n', regr.intercept_, regr.coef_)
 
         # Lots of predictions: predict on entire test set
@@ -347,6 +347,32 @@ class Recipe_Helper():
         ax.scatter(X, resid_curve)
         _ = ax.set_xlabel(xlabel)
         _ = ax.set_ylabel("Residual")
+
+    def compare_regress(self, X,y, model=None, plot_train=False,  xlabel=None, ylabel=None, print_summary=True, visible=False):
+        """
+        Compare the linear model to one with second order polynomial
+        """
+
+        # Run the linear model
+        fig_lin, axs_lin = self.run_regress(X, y, xlabel=xlabel, ylabel=ylabel, plot_train=plot_train, print_summary=False)
+
+        # Run the second order model
+        fig_curv, axs_curv = self.run_regress(X, y, run_transforms=True, xlabel=xlabel, ylabel=ylabel, plot_train=plot_train, print_summary=False)
+
+        # Get rid of grid element for training is not plot_train
+        if not plot_train:
+            axs_lin[-1].remove()
+            axs_curv[-1].remove()
+        
+        if not visible:
+            plt.close(fig_lin)
+            plt.close(fig_curv)
+            
+        return { "linear": (fig_lin, axs_lin),
+                 "second order": (fig_curv, axs_curv)
+                 }
+    
+                
 
 class Bias_vs_Variance_Helper():
     def __init__(self, true_fun, pipe, **params):
