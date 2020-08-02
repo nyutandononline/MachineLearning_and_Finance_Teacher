@@ -198,7 +198,7 @@ class SVM_Helper():
         self.plot_svc_decision_function(clf, ax=ax, plot_support=False);
 
   
-    def plot_3D(self, elev=30, azim=30, X=[], y=[], ax=None):
+    def plot_3D(self, elev=30, azim=30, X=[], y=[], ax=None, x3label="$x_3$"):
         if ax is None:
             plt.figure(figsize=(12,6))
             ax = plt.subplot(projection='3d')
@@ -213,7 +213,9 @@ class SVM_Helper():
 
         ax.set_xlabel("$x_1$")
         ax.set_ylabel("$x_2$")
-        ax.set_zlabel('r')
+
+        ax.zaxis.set_rotate_label(False)  # disable automatic rotation
+        ax.set_zlabel(x3label, rotation=0)
 
         return ax
 

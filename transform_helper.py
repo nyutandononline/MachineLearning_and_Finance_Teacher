@@ -69,7 +69,7 @@ class Transformation_Helper():
         fig_raw,ax_raw = plt.subplots(1,1, figsize=(12,6))
         ax_raw.scatter( neg_X, np.zeros_like(neg_X), color="red",   label="Negative")
         ax_raw.scatter( pos_X, np.zeros_like(pos_X), color="green", label="Positive")
-        ax_raw.set_xlabel("X")
+        ax_raw.set_xlabel("$\mathbf{x}_1$")
         ax_raw.legend()
         
         if not visible:
@@ -82,8 +82,8 @@ class Transformation_Helper():
         ax_trans.scatter( neg_X, neg_X2, color="red",    label="Negative")
         ax_trans.scatter( pos_X, pos_X2, color="green",  label="Positive")
 
-        ax_trans.set_xlabel("$X$")
-        ax_trans.set_ylabel("$X^2$")
+        ax_trans.set_xlabel("$\mathbf{x}_1$")
+        ax_trans.set_ylabel("$\mathbf{x}_1^2$", rotation=0)
         
         if not visible:
             plt.close(fig_trans)
@@ -91,10 +91,11 @@ class Transformation_Helper():
         return fig_raw, ax_raw, fig_trans, ax_trans
 
 class InfluentialPoints_Helper():
-    def __init__(self, **params):
+    def __init__(self, Debug=False, **params):
         # Random number generator
         rng = np.random.RandomState(42)
         self.rng = rng
+        self.Debug = Debug
         
         return
 
@@ -137,10 +138,14 @@ class InfluentialPoints_Helper():
 
 
     def fit_update(self, x_l, y_l):
+        Debug = self.Debug
+        
         # Retrieve original data
         x, y, fitted = self.x, self.y, self.fitted
-        
-        print("called with ", x_l, y_l)
+
+        if Debug:
+            print("called with ", x_l, y_l)
+            
         # Update a single y_value
         # - the element of array y at index x_l will be changed to y_l
         x_update, y_update = x.copy(), y.copy()
@@ -188,10 +193,14 @@ class InfluentialPoints_Helper():
         interact(fit_update_fn,
                  x_l=widgets.IntSlider(min=0,  max=num-1,  step=1,
                                        value=int(num/2),
-                                       continous_update=False),
+                                       continous_update=False,
+                                       description="Index of pt:"
+                                       ),
                  y_l=widgets.IntSlider(min=y.min(), max=y.max(), step=1, 
                                        value=y[ int(num/2)], 
-                                       continous_update=False)
+                                       continous_update=False,
+                                       description="New value:"
+                                       )
                  )
 
 class ShiftedPrice_Helper():
@@ -209,7 +218,7 @@ class ShiftedPrice_Helper():
 
         return dfs
 
-    def plot_data(self, dfs, ax=None):
+    def plot_data(self, dfs, xlabel="Size", ylabel="Price", ax=None):
         if ax is None:
             fig, ax = plt.subplots(1,1, figsize=(12,6) )
             
@@ -217,6 +226,9 @@ class ShiftedPrice_Helper():
         _= ax.scatter(dfs[1]["area"],  2000 + dfs[1]["price"], label="$time_1$")
         _= ax.legend()
 
+        _= ax.set_xlabel(xlabel)
+        _= ax.set_ylabel(ylabel)
+        
         return ax
 
 class RelativePrice_Helper():

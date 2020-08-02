@@ -15,8 +15,9 @@ from sklearn import datasets, svm, metrics
 import pdb
 
 class MNIST_Helper():
-    def __init__(self, save_dir="/tmp", visible=True, **params):
+    def __init__(self, save_dir="/tmp", visible=True, random_seed=42, **params):
         self.X, self.y = None, None
+        self.random_seed = random_seed
         self.visible = visible
         return
 
@@ -70,14 +71,18 @@ class MNIST_Helper():
         else:
             X, y = self.fetch_mnist_784()
 
-        random_state = check_random_state(0)
+        random_seed = self.random_seed
+        
+        random_state = check_random_state(random_seed)
         permutation = random_state.permutation(X.shape[0])
         X = X[permutation]
         y = y[permutation]
         X = X.reshape((X.shape[0], -1))
 
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, train_size=train_samples, test_size=10000)
+            X, y, train_size=train_samples, test_size=10000,
+            random_state=random_state
+        )
 
         scaler = StandardScaler()
         X_train = scaler.fit_transform(X_train)

@@ -513,8 +513,8 @@ class KNN_Helper():
         #_= ax.set_xticks(())
         #_= ax.set_yticks(())
 
-        _ = ax.set_xlabel("Feature 1")
-        _ = ax.set_ylabel("Feature 2")
+        _ = ax.set_xlabel("$x_1$")
+        _ = ax.set_ylabel("$x_2$")
 
         return (xx, yy)
     
@@ -535,8 +535,8 @@ class KNN_Helper():
         #_= ax.set_xticks(())
         #_= ax.set_yticks(())
 
-        _ = ax.set_xlabel("Feature 1")
-        _ = ax.set_ylabel("Feature 2")
+        _ = ax.set_xlabel("$x_1$")
+        _ = ax.set_ylabel("$x_2$")
 
         if ds_cnt == 0:
             _= ax.set_title(name)
