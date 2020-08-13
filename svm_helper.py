@@ -493,7 +493,7 @@ class Charts_Helper():
         if not visible:
             plt.close(fig)
             
-        return fig, ax
+        return fig, axs
 
     def create_sens(self):
         """
@@ -619,7 +619,7 @@ class Charts_Helper():
         fig.savefig(sens_file)
 
         print("Create margin chart")
-        fig, axs = self.create_margin(Cs=[10])
+        fig, axs = self.create_margin(Cs=[ .1, 10])
         margin_file = os.path.join(save_dir, "svm_margin.png")
         fig.savefig(margin_file)
         
