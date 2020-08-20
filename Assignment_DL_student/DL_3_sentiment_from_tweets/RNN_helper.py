@@ -135,7 +135,7 @@ class rnn_helper():
           pickle.dump(history.history, f)
 
     def loadHistory(self, model_name):
-      history_path = self.modelPath(modelName)
+      history_path = self.modelPath(model_name)
       
       # Reload the model from the 2 files we saved
       with open(os.path.join(history_path, 'history'), 'rb') as f:
