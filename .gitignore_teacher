@@ -1,0 +1,10 @@
+.DS_Store
+
+# data files
+/Assignment_DL_teacher/*/Data/*
+/Assignment_DL_student/*/Data/*
+
+# Teacher version
+
+# Teacher can checkin assignments
+# /Assignment_DL_teacher/*

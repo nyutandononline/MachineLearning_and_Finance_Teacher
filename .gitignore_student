@@ -1,0 +1,10 @@
+.DS_Store
+
+# data files
+/Assignment_DL_teacher/*/Data/*
+/Assignment_DL_student/*/Data/*
+
+# Student version
+
+#  MUST NOT check in teacher version of assignments to Student repo
+/Assignment_DL_teacher/*
