@@ -5,7 +5,10 @@ import os
 
 class HELPER:
     def __init__(self):
-        return
+        DATA_DIR = './Data'
+        if not os.path.isdir(DATA_DIR):
+            DATA_DIR  = "../resource/asnlib/publicdata/data"
+        self.DATA_DIR = DATA_DIR
 
     def attrRename(self, df, ticker):
         """
@@ -16,7 +19,7 @@ class HELPER:
         
         return df.rename(columns=rename_map)
 
-    def getData(self, tickers, indx, DATA_DIR, attrs):
+    def getData(self, tickers, indx, attrs):
         """
         Return DataFrame with data for a list of tickers plus and index
         
@@ -27,9 +30,6 @@ class HELPER:
         
         indx: String
         - Ticker of index
-        
-        DATA_DIR: String
-        - Directory of data
         
         attrs: List
         - List of data attributes to retain
@@ -49,7 +49,7 @@ class HELPER:
         # Read the CSV files
         dfs = []
         for ticker_num, ticker in enumerate(tickers):
-            ticker_file = os.path.join(DATA_DIR, "{t}.csv".format(t=ticker) )
+            ticker_file = os.path.join(self.DATA_DIR, "{t}.csv".format(t=ticker) )
             ticker_df = pd.read_csv(ticker_file, index_col=dateAttr, usecols=use_cols)
             
             # Rename attributes with ticker name
@@ -58,7 +58,7 @@ class HELPER:
             dfs.append(ticker_df)
             
               
-        index_file   = os.path.join(DATA_DIR, "{t}.csv".format(t=indx) )
+        index_file   = os.path.join(self.DATA_DIR, "{t}.csv".format(t=indx) )
         index_df   = pd.read_csv(index_file, index_col=dateAttr, usecols=use_cols)
         index_df = self.attrRename(index_df, indx)
         
@@ -67,7 +67,7 @@ class HELPER:
         data_df = pd.concat( dfs, axis=1)
        
         return data_df
-
+    
     def renamePriceToRet(self, df):
         priceAttr = "Adj Close"
         rename_map = { }
