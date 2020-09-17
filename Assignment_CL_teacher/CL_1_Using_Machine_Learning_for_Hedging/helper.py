@@ -67,3 +67,9 @@ class HELPER:
         data_df = pd.concat( dfs, axis=1)
        
         return data_df
+
+    def renamePriceToRet(self, df):
+        priceAttr = "Adj Close"
+        rename_map = { }
+        rename_map = { orig:  orig.replace( priceAttr.replace(" ", "_"), "Ret") for orig in df.columns.to_list() }
+        return df.rename(columns = rename_map)
