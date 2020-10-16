@@ -1,11 +1,23 @@
 import numpy as np
+import pandas as pd
 import os
 import matplotlib.pyplot as plt
 
 
 class Helper():
     def __init__(self):
-        return
+        self.DATA_DIR = './Data'
+        
+        if not os.path.isdir(self.DATA_DIR):
+            self.DATA_DIR = '../resource/asnlib/publicdata/'
+        self.data_file = '5th_yr.csv'
+        
+    
+    def getData(self):
+        train = pd.read_csv( os.path.join(self.DATA_DIR, 'train', self.data_file) )
+        holdout = pd.read_csv( os.path.join(self.DATA_DIR, 'holdout', self.data_file) )
+        return train, holdout
+
 
     def plot_attr(self, df, y_train, attr, trunc=.01):
 	    X = df[attr]
