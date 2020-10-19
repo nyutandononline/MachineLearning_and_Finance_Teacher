@@ -10,7 +10,7 @@ class Helper():
         
         if not os.path.isdir(self.DATA_DIR):
             self.DATA_DIR = '../resource/asnlib/publicdata/'
-        self.data_file = '5th_yr.csv'
+        self.data_file = 'data.csv'
         
     
     def getData(self):
