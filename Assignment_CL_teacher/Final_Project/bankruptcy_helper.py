@@ -44,18 +44,3 @@ class Helper():
 	    data =  X_trunc[ y_trunc == 1 ]
 	    ax2.hist( data, bins, alpha=0.5, label='1', color=color, weights=np.ones(len(data)) / len(data))
 	    ax2.tick_params(axis='y', labelcolor=color)
-
-    def save_data(self, X_train, X_test, y_train, y_test):
-        if not os.path.exists('./mydata'):
-            os.mkdir('./mydata')
-        np.savez_compressed('./mydata/train_test_data.npz', X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test)
-
-        
-    def load_data(self):
-        data_dir = np.load('./mydata/train_test_data.npz')
-        X_train = data_dir['X_train']
-        X_test = data_dir['X_test']
-        y_train = data_dir['y_train']
-        y_test = data_dir['y_test']
-        
-        return X_train, X_test, y_train, y_test
