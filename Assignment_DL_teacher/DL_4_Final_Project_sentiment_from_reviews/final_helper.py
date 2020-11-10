@@ -22,14 +22,18 @@ from tensorflow.keras.models import load_model
 
 class HELPER():
   def __init__(self):
-    return
+    self.DATA_DIR = "./Data"
+    if not os.path.exists(self.DATA_DIR):
+        self.DATA_DIR = "../resource/asnlib/publicdata/tweets/data"
+    self.train_file = "train.csv"
+    self.test_file = "test.csv"
 
-  def getDataRaw(self, DIR, data_file, dropAttrs=["summary"]):
+  def getDataRaw(self):
     
-    df = pd.read_csv(os.path.join(DIR, data_file))
-    df.drop(columns=dropAttrs, inplace=True)
+    train = pd.read_csv(os.path.join(self.DATA_DIR, self.train_file))
+    test = pd.read_csv(os.path.join(self.DATA_DIR, self.test_file))
     
-    return df
+    return train, test
 
   def getData(self, maxlen=1000, sample_size=4000):
     data_raw = getDataRaw()
@@ -44,14 +48,16 @@ class HELPER():
     return data
 
 
-  def getTextClean(self, data_raw, textAttr, sentAttr):
+  def getTextClean(self, data_raw, textAttr, sentAttr=None):
     # Filter out rows with missing reveiws
     mask = data_raw[textAttr].isnull() 
     data_raw = data_raw[ ~mask ]
     docs = data_raw[textAttr].values
-    sents = data_raw[sentAttr].values
-        
-    return docs, sents
+    if sentAttr:
+        sents = data_raw[sentAttr].values
+        return docs, sents
+    else:
+        return docs
 
   def encodeDocs(self, docs, vocab_size, words_in_doc):
     tok = Tokenizer(num_words=vocab_size, oov_token="<OOV>")
