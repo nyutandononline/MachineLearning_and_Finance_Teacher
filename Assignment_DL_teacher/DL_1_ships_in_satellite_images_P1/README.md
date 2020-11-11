@@ -8,5 +8,5 @@
 ### Other foler and file:
 
 - Folder `resource`: Store the dataset
-- `nn_helper.py`: Utility functions to help you complete this assignment easily. You don't need to change this
+- `helper.py`: Utility functions to help you complete this assignment easily. You don't need to change this
 

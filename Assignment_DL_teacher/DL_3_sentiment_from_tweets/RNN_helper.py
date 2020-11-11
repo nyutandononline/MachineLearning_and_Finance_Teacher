@@ -17,10 +17,15 @@ from tensorflow.keras.utils import plot_model
 
 class rnn_helper():
     def __init__(self):
-        return
+        self.DATA_DIR = "./Data"
 
-    def getDataRaw(self, DATA_DIR, tweet_file):
-      tweets_raw = pd.read_csv( os.path.join(DATA_DIR, tweet_file) )
+        if not os.path.exists(self.DATA_DIR):
+            self.DATA_DIR = "../resource/asnlib/publicdata/tweets/Data"
+
+        self.tweet_file = "Apple-Twitter-Sentiment-DFE-1.csv"
+
+    def getDataRaw(self):
+      tweets_raw = pd.read_csv( os.path.join(self.DATA_DIR, self.tweet_file) )
       return tweets_raw
 
     def getTextClean(self, tweets_raw):
