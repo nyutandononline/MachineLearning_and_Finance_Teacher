@@ -167,24 +167,6 @@ class Helper():
       
       return history
 
-  def MyModel(self, test_dir, model_path):
-      # YOU MAY NOT change model after this statement !
-      model = self.loadModel(model_path)
-      
-      # It should run model to create an array of predictions; we initialize it to the empty array for convenience
-      predictions = []
-      
-      # We need to match your array of predictions with the examples you are predicting
-      # The array below (ids) should have a one-to-one correspondence and identify the example your are predicting
-      # For Bankruptcy: the Id column
-      # For Stock prediction: the date on which you are making a prediction
-      ids = []
-      
-      # YOUR CODE GOES HERE
-      
-      
-      return predictions, ids
-
   def json_to_numpy(self, json_file):
     # Read the JSON file
     f = open(json_file)
@@ -198,36 +180,6 @@ class Helper():
     data = data.reshape([-1, 3, 80, 80]).transpose([0,2,3,1])
 
     return data, labels
-
-
-
-
-  from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-  modelName = "Ships_in_satellite_images"
-  es_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=.01, patience=2, verbose=0, mode='auto', baseline=None, restore_best_weights=True)
-
-  callbacks = [ es_callback,
-                ModelCheckpoint(filepath=modelName + ".ckpt", monitor='accuracy', save_best_only=True)
-                ]   
-
-  max_epochs = 30
-
-  def train(self, model, X, y, model_name, epochs=max_epochs):
-    # Describe the model
-    model.summary()
-
-    # Compile the model
-    model.compile(loss='categorical_crossentropy', metrics=['accuracy'])
-
-    # Fix the validation set (for repeatability, not a great idea, in general)
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.20, random_state=42)
-    
-    print("Train set size: ", X_train.shape[0], ", Validation set size: ", X_valid.shape[0])
-
-    history = model.fit(X_train, y_train, epochs=max_epochs, validation_data=(X_valid, y_valid), callbacks=callbacks)
-    fig, axs = plotTrain(history, model_name)
-
-    return history, fig, axs
 
   def acc_key(self, history=None, model=None):
     """
